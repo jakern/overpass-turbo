@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Chrome (Vite)",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/",
+      "sourceMaps": true,
+      "runtimeExecutable": "/usr/bin/brave-browser"
+    },
+    {
+  "name": "Attach to Chrome (Vite)",
+  "type": "pwa-chrome",
+  "request": "attach",
+  "port": 9222,
+  "webRoot": "${workspaceFolder}/"
+}
+  ]
+}
+apk add git openssh && git config --global --add safe.directory /workspaces/overpass-turbo && npm i && npm run start --dev

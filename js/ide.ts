@@ -763,9 +763,9 @@ class IDE {
           source(request, response) {
             // ajax (GET) request to nominatim
             $.ajax(
-              `https://search.osmnames.org/q/${encodeURIComponent(
+              `https://nominatim.jkern.me/search?q=${encodeURIComponent(
                 request.term
-              )}.js?key=${configs.osmnamesApiKey}`,
+              )}&key=${configs.osmnamesApiKey}`,
               {
                 success(data) {
                   // hacky firefox hack :( (it is not properly detecting json from the content-type header)
@@ -776,7 +776,7 @@ class IDE {
                     } catch (e) {}
                   }
                   response(
-                    $.map(data.results.slice(0, 10), (item) => ({
+                    $.map(data.slice(0, 10), (item) => ({
                       label: item.display_name,
                       value: item.display_name,
                       lat: item.lat,
@@ -800,8 +800,8 @@ class IDE {
             if (ui.item.boundingbox && ui.item.boundingbox instanceof Array)
               ide.map.fitBounds(
                 L.latLngBounds([
-                  [ui.item.boundingbox[1], ui.item.boundingbox[0]],
-                  [ui.item.boundingbox[3], ui.item.boundingbox[2]]
+                  [ui.item.boundingbox[0], ui.item.boundingbox[2]],
+                  [ui.item.boundingbox[1], ui.item.boundingbox[3]]
                 ]),
                 {maxZoom: 18}
               );

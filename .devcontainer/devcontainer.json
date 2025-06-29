@@ -1,0 +1,16 @@
+{
+  "name": "Node.js Dev Container",
+  "image": "node:24-alpine",
+  "workspaceFolder": "/workspaces/overpass-turbo",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-typescript-next",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  },
+  "forwardPorts": [5172],
+  "postCreateCommand": "npm install && npm run start"
+}
