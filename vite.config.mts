@@ -8,11 +8,23 @@ import {readFileSync} from "fs";
 import {resolve} from "path";
 import {execSync} from "child_process";
 
-const GIT_VERSION = JSON.stringify(
-  `${execSync("git log -1 --format=%cd --date=short", {
-    encoding: "utf-8"
-  }).trim()}/${execSync("git describe --always", {encoding: "utf-8"}).trim()}`
-);
+let GIT_VERSION;
+try {
+  if (process.env.VITE_GIT_DATE && process.env.VITE_GIT_HASH) {
+    GIT_VERSION = JSON.stringify(`${process.env.VITE_GIT_DATE}/${process.env.VITE_GIT_HASH}`);
+  } else {
+    GIT_VERSION = JSON.stringify(
+      `${execSync("git log -1 --format=%cd --date=short", {
+        encoding: "utf-8"
+      }).trim()}/${execSync("git describe --always", {encoding: "utf-8"}).trim()}`
+    );
+  }
+} catch (error) {
+  console.warn("Git not available, using fallback version. Try with:");
+  console.warn(`export GIT_DATE=$(git log -1 --format=%cd --date=short)
+export GIT_HASH=$(git describe --always)`);
+  GIT_VERSION = JSON.stringify("unknown");
+}
 
 const dependencies = JSON.parse(
   readFileSync("package.json", {encoding: "utf-8"})
